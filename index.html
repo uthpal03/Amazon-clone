@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Clone - Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Product Card Styles */
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+            margin: 10px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .product-image {
+            position: relative;
+            width: 100%;
+            padding-top: 75%; /* 4:3 aspect ratio */
+        }
+
+        .product-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4d4d;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 16px;
+        }
+
+        .product-name {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .current-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #B12704;
+        }
+
+        .original-price {
+            font-size: 0.9rem;
+            color: #666;
+            text-decoration: line-through;
+        }
+
+        .product-rating {
+            color: #ffa41c;
+            margin-bottom: 8px;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 8px;
+            background: #ffd814;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #f7ca00;
+        }
+
+        /* Product Grid Layout */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="https://m.media-amazon.com/images/G/01/amazon-logo.svg" alt="Amazon Logo">
+                </a>
+            </div>
+            
+            <div class="search-bar">
+                <select class="search-categories">
+                    <option>All</option>
+                    <option>Electronics</option>
+                    <option>Books</option>
+                    <option>Home</option>
+                    <option>Fashion</option>
+                    <option>Sports</option>
+                </select>
+                <input type="text" placeholder="Search Amazon">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+
+            <div class="account-section">
+                <div class="account">
+                    <span>Hello, Sign in</span>
+                    <span>Account & Lists</span>
+                </div>
+                <div class="orders">
+                    <span>Returns</span>
+                    <span>& Orders</span>
+                </div>
+                <div class="cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                    <span>Cart</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="hamburger-menu">
+                <i class="fas fa-bars"></i>
+                <span>All</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Today's Deals</a></li>
+                <li><a href="#">Customer Service</a></li>
+                <li><a href="#">Registry</a></li>
+                <li><a href="#">Gift Cards</a></li>
+                <li><a href="#">Sell</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <img src="https://m.media-amazon.com/images/I/61TD5JLGhIL._SX3000_.jpg" alt="Hero Banner">
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories">
+            <h2>Shop by Category</h2>
+            <div class="category-grid" id="categoryGrid">
+                <!-- Categories will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Featured Deals -->
+        <section class="featured-deals">
+            <h2>Today's Deals</h2>
+            <div class="product-grid" id="dealsOfTheDay">
+                <!-- Deals will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Top Rated Products -->
+        <section class="top-rated">
+            <h2>Top Rated Products</h2>
+            <div class="product-grid" id="topRated">
+                <!-- Top rated products will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- New Arrivals -->
+        <section class="new-arrivals">
+            <h2>New Arrivals</h2>
+            <div class="product-grid" id="newArrivals">
+                <!-- New arrivals will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Recommended for You -->
+        <section class="recommended">
+            <h2>Recommended for You</h2>
+            <div class="product-grid" id="recommended">
+                <!-- Recommended products will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Get to Know Us</h3>
+                <ul>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">About Amazon</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Make Money with Us</h3>
+                <ul>
+                    <li><a href="#">Sell products on Amazon</a></li>
+                    <li><a href="#">Sell on Amazon Business</a></li>
+                    <li><a href="#">Become an Affiliate</a></li>
+                    <li><a href="#">Advertise Your Products</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Amazon Payment Products</h3>
+                <ul>
+                    <li><a href="#">Amazon Business Card</a></li>
+                    <li><a href="#">Shop with Points</a></li>
+                    <li><a href="#">Reload Your Balance</a></li>
+                    <li><a href="#">Amazon Currency Converter</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Let Us Help You</h3>
+                <ul>
+                    <li><a href="#">Amazon and COVID-19</a></li>
+                    <li><a href="#">Your Account</a></li>
+                    <li><a href="#">Your Orders</a></li>
+                    <li><a href="#">Shipping Rates & Policies</a></li>
+                    <li><a href="#">Returns & Replacements</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Amazon Clone. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Sign In Modal -->
+    <div class="modal" id="signInModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Sign In</h2>
+            <form id="signInForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit">Sign In</button>
+            </form>
+            <p>New to Amazon? <a href="#" id="createAccount">Create an account</a></p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // Product Card Creation Function
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            
+            const discountBadge = product.discount ? 
+                `<div class="discount-badge">-${product.discount}%</div>` : '';
+            
+            const ratingStars = generateRatingStars(product.rating);
+            
+            card.innerHTML = `
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                    ${discountBadge}
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">${product.name}</h3>
+                    <div class="product-price">
+                        <span class="current-price">$${product.price.toFixed(2)}</span>
+                        ${product.originalPrice ? 
+                            `<span class="original-price">$${product.originalPrice.toFixed(2)}</span>` : 
+                            ''}
+                    </div>
+                    <div class="product-rating">
+                        ${ratingStars}
+                        <span class="rating-count">(${product.rating})</span>
+                    </div>
+                    <p class="product-description">${product.description}</p>
+                    <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                        Add to Cart
+                    </button>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function generateRatingStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            
+            return `
+                ${'★'.repeat(fullStars)}
+                ${hasHalfStar ? '⯨' : ''}
+                ${'☆'.repeat(emptyStars)}
+            `;
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load products into different sections
+            const dealsOfTheDay = document.getElementById('dealsOfTheDay');
+            const topRated = document.getElementById('topRated');
+            const newArrivals = document.getElementById('newArrivals');
+
+            // Filter products for each section
+            const deals = products.filter(p => p.discount > 15);
+            const topProducts = products.sort((a, b) => b.rating - a.rating).slice(0, 4);
+            const arrivals = products.slice(-4);
+
+            // Render products in each section
+            deals.forEach(product => {
+                dealsOfTheDay.appendChild(createProductCard(product));
+            });
+
+            topProducts.forEach(product => {
+                topRated.appendChild(createProductCard(product));
+            });
+
+            arrivals.forEach(product => {
+                newArrivals.appendChild(createProductCard(product));
+            });
+        });
+
+        // Add to cart functionality
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                console.log(`Added to cart: ${product.name}`);
+                // Update cart count
+                const cartCount = document.querySelector('.cart-count');
+                cartCount.textContent = parseInt(cartCount.textContent) + 1;
+            }
+        }
+    </script>
+    <script src="products.js"></script>
+</body>
+</html> 

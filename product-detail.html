@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - Amazon Clone</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .product-detail-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .product-images {
+            flex: 1;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .product-images img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .product-info {
+            flex: 1;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            color: #B12704;
+            margin-bottom: 1rem;
+        }
+
+        .product-description {
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quantity-selector select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #FFD814;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .buy-now-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #FFA41C;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .product-detail-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="https://m.media-amazon.com/images/G/01/amazon-logo.svg" alt="Amazon Logo">
+                </a>
+            </div>
+            
+            <div class="search-bar">
+                <select class="search-categories">
+                    <option>All</option>
+                    <option>Electronics</option>
+                    <option>Books</option>
+                    <option>Home</option>
+                    <option>Fashion</option>
+                    <option>Sports</option>
+                </select>
+                <input type="text" placeholder="Search Amazon">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+
+            <div class="account-section">
+                <div class="account">
+                    <span>Hello, Sign in</span>
+                    <span>Account & Lists</span>
+                </div>
+                <div class="orders">
+                    <span>Returns</span>
+                    <span>& Orders</span>
+                </div>
+                <div class="cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                    <span>Cart</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="hamburger-menu">
+                <i class="fas fa-bars"></i>
+                <span>All</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Today's Deals</a></li>
+                <li><a href="#">Customer Service</a></li>
+                <li><a href="#">Registry</a></li>
+                <li><a href="#">Gift Cards</a></li>
+                <li><a href="#">Sell</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="product-detail-container">
+        <div class="product-detail">
+            <div class="product-images">
+                <div class="main-image">
+                    <img id="mainProductImage" src="" alt="Product Image">
+                </div>
+                <div class="thumbnail-images">
+                    <!-- Thumbnails will be added dynamically -->
+                </div>
+            </div>
+
+            <div class="product-info">
+                <h1 id="productName"></h1>
+                <div class="product-rating" id="productRating"></div>
+                <div class="product-price">
+                    <span class="original-price" id="originalPrice"></span>
+                    <span class="current-price" id="currentPrice"></span>
+                    <span class="discount-badge" id="discountBadge"></span>
+                </div>
+
+                <div class="product-description" id="productDescription"></div>
+
+                <div class="product-features">
+                    <h3>About this item</h3>
+                    <ul id="productFeatures"></ul>
+                </div>
+
+                <div class="product-colors">
+                    <h3>Available Colors</h3>
+                    <div class="color-options" id="colorOptions"></div>
+                </div>
+
+                <div class="product-stock" id="productStock"></div>
+
+                <div class="purchase-options">
+                    <div class="quantity-selector">
+                        <label for="quantity">Quantity:</label>
+                        <select id="quantity">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+
+                    <div class="buttons">
+                        <button class="add-to-cart-btn" id="addToCartBtn">Add to Cart</button>
+                        <button class="buy-now-btn" id="buyNowBtn">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Get to Know Us</h3>
+                <ul>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">About Amazon</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Make Money with Us</h3>
+                <ul>
+                    <li><a href="#">Sell products on Amazon</a></li>
+                    <li><a href="#">Sell on Amazon Business</a></li>
+                    <li><a href="#">Become an Affiliate</a></li>
+                    <li><a href="#">Advertise Your Products</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Amazon Payment Products</h3>
+                <ul>
+                    <li><a href="#">Amazon Business Card</a></li>
+                    <li><a href="#">Shop with Points</a></li>
+                    <li><a href="#">Reload Your Balance</a></li>
+                    <li><a href="#">Amazon Currency Converter</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Let Us Help You</h3>
+                <ul>
+                    <li><a href="#">Amazon and COVID-19</a></li>
+                    <li><a href="#">Your Account</a></li>
+                    <li><a href="#">Your Orders</a></li>
+                    <li><a href="#">Shipping Rates & Policies</a></li>
+                    <li><a href="#">Returns & Replacements</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Amazon Clone. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
